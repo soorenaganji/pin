@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-import Modal from "./components/modules/FormModal";
-import { useSearch } from "./context/SearchContext";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import EditPage from "./components/templates/EditPage";
 import HomePage from "./components/templates/HomePage";
-import { getData, updateData } from "./api/api";
 
 const App = () => {
+  
   return (
     <div className=" p-4">
       <Routes>

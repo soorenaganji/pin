@@ -1,6 +1,7 @@
 export const getData = () => {
   const data = JSON.parse(localStorage.getItem("tableData"));
-  return data;
+  const confirmedData = data ? data : localStorage.setItem("tableData" , JSON.stringify([]))
+  return confirmedData;
 };
 export const updateData = (newData) => {
     console.log(newData)
