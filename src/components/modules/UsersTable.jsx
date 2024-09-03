@@ -50,7 +50,10 @@ function UsersTable({
           <tr>
             <th className="px-4 py-2 text-lg font-normal border-r">Name</th>
             <th className="px-4 py-2 text-lg font-normal border-r">Email</th>
-            <th className="flex items-center justify-center py-2  font-normal" colSpan={1}>
+            <th
+              className="flex items-center justify-center py-2  font-normal"
+              colSpan={1}
+            >
               <button
                 onClick={() => handleSort("name")}
                 className={`px-4 py-2  ${
@@ -104,27 +107,28 @@ function UsersTable({
                     />
                   ) : (
                     <>
-                      <button
-                        onClick={() => toggleDropdown(index)}
-                        className="focus:outline-none text-3xl"
-                      >
-                        <CiViewList />
-                      </button>
-                      {dropdownOpen === index && (
-                        <div className="absolute right-0 top-0 py-2 w-48 bg-white rounded-md flex items-center justify-center gap-x-2 px-3 z-20">
+                      {dropdownOpen === index ? (
+                        <div className="absolute  top-0  w-56 ml-20   rounded-md flex items-center justify-around gap-x-2 px-3  z-20">
                           <Link
-                            className="w-full p-2 flex items-center justify-center text-xl bg-blue-100 text-gray-700 hover:bg-blue-600 rounded-md text-center hover:text-white"
+                            className="w-full py-2 flex items-center justify-center text-2xl mt-2  mx-auto bg-blue-100 text-gray-700 hover:bg-blue-600 rounded-md text-center hover:text-white transition-all duration-200"
                             to={`/edit/${item.id}`}
                           >
                             <CiEdit />
                           </Link>
                           <button
-                            className="w-full p-2 flex items-center justify-center text-xl bg-red-100 text-red-700 hover:bg-red-600 rounded-md text-center hover:text-white"
+                            className="w-full py-2 flex items-center justify-center text-2xl mt-2  mx-auto bg-red-100 text-red-700 hover:bg-red-600 rounded-md text-center hover:text-white transition-all duration-200"
                             onClick={() => handleDelete(index)}
                           >
                             <GoTrash />
                           </button>
                         </div>
+                      ) : (
+                        <button
+                          onClick={() => toggleDropdown(index)}
+                          className="focus:outline-none text-3xl"
+                        >
+                          <CiViewList />
+                        </button>
                       )}
                     </>
                   )}
