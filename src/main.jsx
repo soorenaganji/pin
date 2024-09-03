@@ -6,9 +6,11 @@ import Layout from "./components/layout/layout.jsx";
 import App from "./App.jsx";
 import "./index.css";
 import { MultiSelectProvider } from "./context/MultiSelectContext.jsx";
+import { ReloadProvider } from "./context/ReloadContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <ReloadProvider>
     <SearchProvider>
       <MultiSelectProvider>
       <Layout>
@@ -16,5 +18,6 @@ createRoot(document.getElementById("root")).render(
       </Layout>
       </MultiSelectProvider>
     </SearchProvider>
+    </ReloadProvider>
   </StrictMode>
 );

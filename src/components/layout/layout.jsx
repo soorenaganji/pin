@@ -9,12 +9,8 @@ import { Toaster } from "react-hot-toast";
 import { IoIosUndo } from "react-icons/io";
 function Layout({ children }) {
   const { searchQuery, setSearchQuery } = useSearch();
-  const {
-    isMultiSelect,
-    toggleMultiSelect,
-    clearSelectedUsers,
-    clearSelection,
-  } = useMultiSelect();
+  const { isMultiSelect, toggleMultiSelect, clearSelectedUsers } =
+    useMultiSelect();
 
   return (
     <div className="h-screen">
@@ -59,7 +55,7 @@ function Layout({ children }) {
         </div>
       </header>
       <main className="flex-grow">{children}</main>
-      <footer className="w-full text-center text-sm absolute bottom-0 py-2">
+      <footer className="w-full text-center text-sm pb-2">
         <p>Created With ❤️ By Sourena Ganji</p>
       </footer>
       <Toaster />

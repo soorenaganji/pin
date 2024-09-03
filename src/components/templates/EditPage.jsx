@@ -3,16 +3,19 @@ import { useParams } from "react-router-dom";
 import Modal from "../modules/FormModal";
 import { updateOne } from "../../api/api";
 import { getData } from "../../api/api";
+import { useReload } from "../../context/ReloadContext";
 
 const EditPage = () => {
   const { userEmail } = useParams(); // Assuming the URL is /edit/:userEmail
   const [formData, setFormData] = useState(null);
+  const { setShouldBeReloaded } = useReload();
   useEffect(() => {
     const data = getData();
     const userToEdit = data.find((user) => user.id == userEmail);
     console.log();
     if (userToEdit) {
       setFormData(userToEdit);
+      setShouldBeReloaded(true)
     }
   }, [userEmail]);
 
@@ -24,7 +27,6 @@ const EditPage = () => {
 
   return (
     <Modal
-
       isOpen={true}
       onClose={() => window.history.back()}
       onSave={handleSave}
