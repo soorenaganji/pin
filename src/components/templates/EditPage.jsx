@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Modal from "../modules/FormModal";
-import { updateOne } from "../../api/api";
-import { getData } from "../../api/api";
 import { useReload } from "../../context/ReloadContext";
-
+import Modal from "../modules/FormModal";
+import { updateOne ,getData  } from "../../api/api";
 const EditPage = () => {
   const { userEmail } = useParams(); // Assuming the URL is /edit/:userEmail
   const [formData, setFormData] = useState(null);
@@ -12,7 +10,6 @@ const EditPage = () => {
   useEffect(() => {
     const data = getData();
     const userToEdit = data.find((user) => user.id == userEmail);
-    console.log();
     if (userToEdit) {
       setFormData(userToEdit);
       setShouldBeReloaded(true)

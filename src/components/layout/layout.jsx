@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "../../../public/logo.png";
-import { CiSearch } from "react-icons/ci";
-import { BiSelectMultiple } from "react-icons/bi";
-import { GoTrash } from "react-icons/go"; // New import for trash icon
 import { useSearch } from "../../context/SearchContext";
 import { useMultiSelect } from "../../context/MultiSelectContext";
 import { Toaster } from "react-hot-toast";
+import logo from "../../../public/logo.png";
+import { CiSearch } from "react-icons/ci";
+import { BiSelectMultiple } from "react-icons/bi";
+import { GoTrash } from "react-icons/go"; 
 import { IoIosUndo } from "react-icons/io";
 function Layout({ children }) {
   const { searchQuery, setSearchQuery } = useSearch();

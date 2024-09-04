@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { generateId } from "../../utils/generateId";
-
+import { validateForm } from "../../utils/validateForm";
 const Modal = ({ isOpen, onClose, onSave, initialData }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -22,29 +22,10 @@ const Modal = ({ isOpen, onClose, onSave, initialData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const { name, email, job, phoneNumber } = formData;
-
-    // Validate that all fields contain at least 2 characters
-    if (name.length < 2 || job.length < 2) {
-      toast.error("Name and Job should contain at least 2 characters");
+    const isDataValid = validateForm(toast, formData);
+    if (!isDataValid) {
       return;
     }
-
-    // Validate email format using a simple regular expression
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
-    // Validate phone number format (Iranian numbers)
-    const phonePattern = /^(\+98|0)?9\d{9}$/;
-    if (!phonePattern.test(phoneNumber)) {
-      toast.error("Please enter a valid Iranian phone number");
-      return;
-    }
-
     let isUserSure = false;
     const handleUserConfirmation = (t, confirmation) => {
       toast.dismiss(t.id);
@@ -101,7 +82,6 @@ const Modal = ({ isOpen, onClose, onSave, initialData }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50">
-      <Toaster />
       <div className="bg-white rounded-lg shadow-lg w-96 p-6">
         <h2 className="text-2xl font-bold mb-4">Edit Entry</h2>
         <form onSubmit={handleSubmit}>

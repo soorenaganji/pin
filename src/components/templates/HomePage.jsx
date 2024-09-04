@@ -1,14 +1,17 @@
-import UsersTable from "../modules/UsersTable";
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useReload } from "../../context/ReloadContext";
 import { useSearch } from "../../context/SearchContext";
 import { getData, updateData } from "../../api/api";
+import UsersTable from "../modules/UsersTable";
 import Modal from "../modules/FormModal";
-import { useReload } from "../../context/ReloadContext";
-import toast from "react-hot-toast";
 const HomePage = () => {
   const { searchQuery } = useSearch();
   const { shouldBeReloaded, setShouldBeReloaded } = useReload();
+  const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState([]);
   useEffect(() => {
     if (shouldBeReloaded) {
@@ -19,9 +22,31 @@ const HomePage = () => {
     }
   }, [shouldBeReloaded]);
 
-  const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleDropdown = (index) => {
+    setDropdownOpen(dropdownOpen === index ? null : index);
+  };
+
+  const handleEdit = (email) => {
+    const user = data.find((user) => user.email === email);
+    if (user) {
+      setFormData(user);
+      navigate(`/edit/${email}`);
+    }
+  };
+  const handleSave = (newUser) => {
+    const updatedData = updateData(newUser);
+    setData([...data, newUser]);
+    return updatedData;
+  };
+
+  const filteredData = data.filter(
+    (item) =>
+      (item.name &&
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item.email &&
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   const handleDelete = (index) => {
     let isUserSure = false;
     const handleUserConfirmation = (t, confirmation) => {
@@ -32,11 +57,9 @@ const HomePage = () => {
         setData(updatedData);
         localStorage.setItem("tableData", JSON.stringify(updatedData));
         setDropdownOpen(null);
-        toast.success(
-          "Successfully Deleted"
-        );
+        toast.success("Successfully Deleted");
         e.preventDefault();
-        return 
+        return;
       }
     };
     toast.custom((t) => (
@@ -69,32 +92,6 @@ const HomePage = () => {
       </div>
     ));
   };
-
-  const toggleDropdown = (index) => {
-    setDropdownOpen(dropdownOpen === index ? null : index);
-  };
-
-  const handleEdit = (email) => {
-    const user = data.find((user) => user.email === email);
-    if (user) {
-      setFormData(user);
-      navigate(`/edit/${email}`);
-    }
-  };
-  const handleSave = (newUser) => {
-    const updatedData = updateData(newUser);
-    setData([...data, newUser]);
-    return updatedData;
-  };
-
-  const filteredData = data.filter(
-    (item) =>
-      (item.name &&
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item.email &&
-        item.email.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
-
   return (
     <div className=" p-4">
       <div className="flex justify-between w-full max-w-6xl mb-4">
